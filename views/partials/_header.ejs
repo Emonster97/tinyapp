@@ -5,9 +5,26 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-item nav-link" href="/urls">My URLs</a>
-        <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
+      <div class="navbar-nav" style="width:100%; display:flex; justify-content: space-between">
+        
+        <div>
+          <a style="display: inline-block;" class="nav-item nav-link" href="/urls">My URLs</a>
+          <a style="display: inline-block;" class="nav-item nav-link" href="/urls/new">Create New URL</a>
+        </div>
+        
+        <% if (username === undefined) { %>
+
+        
+          <form method="POST" action="/login" style=" justify-content: flex-start;"> 
+            
+            <input class="form-control" type="text" name="username" style="display: inline-block; width:65%;" >
+          <button type="submit" class="btn btn-outline-dark">Login</button></form>
+         <% } else { %>
+          <p style="padding: 8px; margin: 0;"> Logged in as: <%=username%>!</p>
+          <form method="POST" action="/logout"> 
+            
+          <button type="submit" class="btn btn-outline-dark">Log Out</button></form>
+          <% } %>
       </div>
     </div>
   </nav>
