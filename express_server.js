@@ -155,6 +155,11 @@ app.post("/login", (req, res) => {
 })
 
 app.post("/urls/:id", (req, res) => {
+  let user = req.cookies["user_id"];
+  if (user !== urlDatabase[req.params.id].userID) {
+    res.status(403).send('Sorry, you need to be the owner of this url!');
+    return;
+  }
    urlDatabase[req.params.id].longURL = req.body.longURL;
    res.redirect(`/urls/${req.params.id}`);
 })
@@ -228,6 +233,9 @@ app.get("/urls/new", (req, res) => {
 
 app.get("/urls/:shortURL", (req, res) => {
   const shortURL = req.params.shortURL;
+  if (!Object.keys(urlDatabase).includes(shortURL)) {
+    res.status(400).send('This short URL does not exist!');
+  }
   let user = findUserById(req.cookies["user_id"], users);
   const templateVars = { 
     user: user,
