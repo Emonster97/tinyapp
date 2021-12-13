@@ -8,6 +8,12 @@
 
 <body>
   <%- include('partials/_header') %> 
+
+  <%if (user === false) { %>
+    <h1> Please login to continue. </h1>
+  <% } else if (userID !== user.id) {%>
+    <h1> This URL does not belong to you! </h1>
+  <% } %>
   <div class="card text-center">
       <div class="card-header"></div>
       <div class="card-body">
