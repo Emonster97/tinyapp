@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const express = require("express");
 const app = express();
 const PORT = 8080; // default port 8080
@@ -100,8 +101,8 @@ app.post("/register", (req, res) => {
   const name = req.body.name;
   const email = req.body.email;
   const password = req.body.password;
-  
 
+  const hashedPassword = bcrypt.hashSync(password, 10);
 
   const user = findUserByEmail(email, users);
   if (user) {
@@ -119,7 +120,7 @@ app.post("/register", (req, res) => {
     id: userId,
     name,
     email,
-    password,
+    password:hashedPassword,
   };
 
   users[userId] = newUser;
@@ -146,7 +147,7 @@ app.post("/login", (req, res) => {
     res.status(403).send('Sorry, a user with that email does not exist!');
     return;
   }
-  if (user.password !== password) {
+  if (!bcrypt.compareSync(password, user.password)) {
     res.status(403).send('Sorry, that password is incorrect!');
     return;
   }
