@@ -4,9 +4,11 @@ TinyApp is a full stack web application built with Node and Express that allows 
 
 ## Final Product
 
-!["screenshot description"](#)
+!["screenshot of URLS page"](https://github.com/Emonster97/tinyapp/blob/master/docs/urls_page.png?raw=true)
 
-!["screenshot description"](#)
+!["screenshot of editted URLS"](https://github.com/Emonster97/tinyapp/blob/master/docs/editted_urls.png?raw=true)
+
+!["screenshot of a URL not belonging to user"](https://github.com/Emonster97/tinyapp/blob/master/docs/not-your-url.png?raw=true)
 
 ## Dependencies
 
