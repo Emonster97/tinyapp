@@ -1,3 +1,4 @@
+app.set("view engine", "ejs"); //sets ejs template
 
 const express = require("express");
 const bcrypt = require('bcryptjs');
@@ -6,7 +7,6 @@ const PORT = 8080; // default port 8080
 
 //email id function, identify user in database by email 
 const findUserByEmail = require("./helpers.js");
-
 
 function generateRandomString() {
   let result = '';
@@ -18,11 +18,6 @@ function generateRandomString() {
   }
   return result;
 }
-
-//think about an if incases where the user does not add
-
-
-app.set("view engine", "ejs"); //sets ejs template
 
 const urlDatabase = {
   b6UTxQ: {
@@ -119,7 +114,6 @@ app.post("/register", (req, res) => {
 
   users[userId] = newUser;
 
-  //res.cookie('user_id', userId);
   req.session.user_id = userId;
   console.log(users);
 
@@ -147,7 +141,6 @@ app.post("/login", (req, res) => {
     res.status(403).send('Sorry, that password is incorrect!');
     return;
   }
-  //res.cookie('user_id', user.id);
   req.session.user_id = user.id;
   res.redirect("/urls");
 });
@@ -160,7 +153,7 @@ app.post("/urls/:id", (req, res) => {
     return;
   }
   urlDatabase[req.params.id].longURL = req.body.longURL;
-  res.redirect(`/urls/${req.params.id}`);
+  res.redirect(`/urls`);
 });
 
 //makes the new urls
@@ -170,7 +163,6 @@ app.post("/urls", (req, res) => {
     res.status(403).send('Sorry, you need to be logged in to use this feature!');
     return;
   }
-  
 
   let shortURL = generateRandomString();
   urlDatabase[shortURL] = {
@@ -181,7 +173,6 @@ app.post("/urls", (req, res) => {
   console.log(req.body);  // Log the POST request body to the console
   res.redirect("/urls");         // Respond with 'Ok' (we will replace this)
 });
-
 
 //deletes urls
 app.post("/urls/:shortURL/delete", (req, res) => {
@@ -262,7 +253,6 @@ app.get("/urls", (req, res) => {
   res.render("urls_index", templateVars);
 });
 
-
 app.get("/", (req, res) => {
   res.send("Hello!");
 });
@@ -273,15 +263,6 @@ app.get("/urls.json", (req, res) => {
 
 app.get("/hello", (req, res) => {
   res.send("<html><body>Hello <b>World</b></body></html>\n");
-});
-
-app.get("/set", (req, res) => {
-  let a = 1;
-  res.send(`a = ${a}`);
-});
- 
-app.get("/fetch", (req, res) => {
-  res.send(`a = ${a}`);
 });
 
 app.listen(PORT, () => {
